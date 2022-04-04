@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-8">
+            <h3>Test name: {{ quiz.name }}</h3>
+
+            {% if quiz.get_questions %}
+                <p class="text-muted">Please click the start button to take quiz</p>
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="start_quiz" value="{{ quiz.name }}">
+                    <button type="submit" name="button_quiz_taken" class="btn btn-danger mb-2">START</button>
+                </form>
+
+                <h5>Questions: </h5>
+                <ul class="list-group">
+                    {% for question in questions %}
+                        <li class="list-group-item mb-3">
+                            {% if questions.has_next %}
+                                <form class="form-group" action="?page={{ questions.next_page_number }}" method="post">
+                            {% else %}
+                                <form class="form-group" method="post">
+                            {% endif %}
+                            {% csrf_token %}
+                            <p>{{ question }}</p>
+                            <hr>
+                            <input type="hidden" name="question" value="{{ question }}">
+                            <p>Answers:</p>
+                            {% for answer in question.get_answers %}
+                                <div class="radio">
+                                    <label><input type="radio" name="question_choice" required
+                                                  value="{{ answer }}"> {{ answer }}</label>
+                                </div>
+                            {% endfor %}
+                            {% if questions.has_next %}
+                                <button type="submit" name="subsequent_submit" class="btn btn-outline-primary">Submit
+                                </button>
+                            {% else %}
+                                <input type="submit" name="final_submit" class="btn btn-outline-danger" value="Submit">
+                            {% endif %}
+                            </form>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <h5>No Questions</h5>
+            {% endif %}
+        </div>
+
+        <div class="col-md-4">
+            <p><h5>Quiz takers: {{ quiz_takers_count }}</h5><p>
+            <ul>
+                {% if quiz_takers %}
+                    {% for quiz_taker in quiz_takers %}
+                        <li>
+                            {{ quiz_taker.student }}
+                            {{ quiz_taker.quiz }}
+                        </li>
+                    {% endfor %}
+                {% else %}
+                    No quiz takers
+                {% endif %}
+            </ul>
+        </div>
+
+    </div>
+{% endblock %}

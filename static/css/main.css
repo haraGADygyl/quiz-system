@@ -1,0 +1,56 @@
+body {
+    background-image: url(/static/images/photo2.jpeg) center;
+    -webkit-background-size: cover;
+    background-size: cover;
+}
+
+.navbar li {
+    color: white;
+}
+
+.login-item {
+    margin-top: 10px;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    max-width: 450px;
+    /*height: 400px;*/
+    /*background-color: lightgrey;*/
+
+    padding: 60px 30px;
+    top: 50%;
+    left: 50%;
+    /*position: absolute;*/
+    position: center;
+    /*transform: translate(-50%, -50%);*/
+    box-shadow: 8px 8px 50px #000;
+    border-radius: 10%;
+
+}
+
+/*.login-item {
+    width: 450px;
+    margin: 10px;
+}
+*/
+.login-item h2 {
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+    text-align: center;
+    /*font-size: 13px;*/
+}
+
+.login-item input {
+    border: 1px solid #ddd;
+    /*border-bottom: 1px solid #ddd;*/
+    background: transparent;
+    outline: none;
+    opacity: 1;
+    color: #ccc;
+}
+
+.login-item button {
+    width: 100%;
+}

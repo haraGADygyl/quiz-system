@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <p>
+        <h3>Quiz name: {{ object.name }}</h3>
+        <h5 class="text-secondary">Quiz subject: {{ quiz.subject }}</h5>
+    <p>
+    <h6>Last updated on: {{ object.updated_on }}</h6>
+    <p><h5 class="text-muted">Quiz ID: {{ object.pk }}</h5><p>
+    <p><h5 class="text-muted">Quiz owner: {{ object.owner }}</h5><p>
+    <p><h5 class="text-muted">Total questions: {{ object.get_questions.count }} </h5><p>
+
+    {% if user.is_authenticated and user.is_teacher %}
+        <div class="mt-1">
+            <a href="{% url 'quiz_list' %}" type="button" class="btn btn-primary btn-sm">Back</a>
+            {% if user == object.owner %}
+                <a href="{% url 'quiz_update' object.pk %}">
+                    <button type="button" name="btn_quiz_edit" class="btn btn-warning btn-sm">Edit Quiz</button>
+                </a>
+                <a href="{% url 'quiz_delete' object.pk %}">
+                    <button type="button" name="btn_quiz_delete" class="btn btn-danger btn-sm">Delete Quiz</button>
+                </a>
+                <a href="{% url 'create_question' %}">
+                    <button type="button" name="btn_question_add" class="btn btn-primary btn-sm">Add Question
+                    </button>
+                </a>
+            {% endif %}
+        </div>
+
+        <hr>
+        <div class="choices">
+            <h5>Questions</h5>
+            {{ object.question_list }}
+            <ol>
+                {% for question in object.get_questions %}
+                    <li>
+                        {{ question }}
+                        <a href="{% url 'question_detail' question.pk %}">
+                            <button type="button" name="btn_question_details" class="btn btn-info btn-sm">Details
+                            </button>
+                        </a>
+                    </li>
+                    <h6>Choices</h6>
+                    <ol type="a">
+                        {% for answer in question.get_answers %}
+                            <li>{{ answer }}</li>
+                        {% endfor %}
+                    </ol>
+                {% endfor %}
+            </ol>
+        </div>
+        <hr>
+    {% endif %}
+{% endblock %}

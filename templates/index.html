@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="jumbotron" style="text-align:center;">
+        <h1>Welcome <strong>{{ user.username }}</strong></h1>
+        <h4 style="margin-top: 3em">Here you can find all kinds of quizzes related to programming.</h4>
+        <p>
+            {% if user.is_authenticated %}
+                {% if user.is_teacher %}
+                    <h5>As a teacher you can create quizzes for your students.</h5>
+                {% elif user.is_student %}
+                    <p>As a student you can take quizzes created by your teachers.</p>
+                    <p><strong>Your interests are: </strong></p>
+                    <ul>
+                        {% for subject in user.student.get_interests %}
+                            <li>
+                                {{ subject }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>As an admin you can moderate everything in the quiz system via the Django admin panel.</p>
+                {% endif %}
+            {% else %}
+                <div>
+                    <p>You can check all available quizzes, but you have to login in order to take them</p>
+                    <a href="{% url 'quiz_list' %}" type="button" class="btn btn-primary btn-sm">See all quizzes</a>
+                </div>
+            {% endif %}
+        <p>
+    </div>
+{% endblock %}
