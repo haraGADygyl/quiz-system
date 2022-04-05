@@ -4,6 +4,7 @@ import logging
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db.models import F
+from django.forms import Textarea
 from django.http import JsonResponse, FileResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
@@ -27,15 +28,18 @@ logger = logging.getLogger(__name__)
 
 class QuizList(ListView):
     model = Quiz
-    # paginate_by = 2
     template_name = "learning/quiz_list.html"
 
 
 @method_decorator([login_required, teacher_required], name="dispatch")
 class CreateQuizView(CreateView):
-    form_class = QuizForm
-    # success_url = reverse_lazy('quiz_detail')
+    model = Quiz
     template_name = "learning/quiz_add.html"
+    fields = ('name', 'subject', 'roll_out')
+
+    def form_valid(self, form):
+        form.instance.owner_id = self.request.user.id
+        return super().form_valid(form)
 
 
 class QuizDetailView(DetailView):
@@ -62,12 +66,6 @@ class QuizDeleteView(DeleteView):
     model = Quiz
     template_name = 'learning/quiz_confirm_delete.html'
     success_url = reverse_lazy("quiz_list")
-
-#
-# class QuizTake(ListView):
-#     model = Question
-#     paginate_by = 1
-#     template_name = "learning/quiz_taking2.html"
 
 
 # Student taking Quiz

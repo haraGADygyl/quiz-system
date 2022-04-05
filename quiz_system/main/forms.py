@@ -8,8 +8,8 @@ from .models import Quiz, Question, Answer
 class QuizForm(ModelForm):
     class Meta:
         model = Quiz
+        # fields = ('name', 'subject', 'roll_out')
         fields = "__all__"
-
         widgets = {
             'name': TextInput(
                 attrs={
