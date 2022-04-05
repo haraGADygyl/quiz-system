@@ -2,8 +2,8 @@
 
 {% block content %}
     <p>
-        <h3>Quiz Name: {{ object.name }}</h3>
-        <h5 class="text-secondary">Quiz Subject: {{ quiz.subject }}</h5>
+    <h3>Quiz Name: {{ object.name }}</h3>
+    <h5 class="text-secondary">Quiz Subject: {{ quiz.subject }}</h5>
     <p>
     <h6>Last Updated On: {{ object.updated_on }}</h6>
     <p><h5 class="text-muted">Quiz ID: {{ object.pk }}</h5><p>
@@ -24,8 +24,8 @@
                     <button type="button" name="btn_question_add" class="btn btn-primary btn-sm">Add Question
                     </button>
                 </a>
+                </div>
             {% endif %}
-        </div>
 
         <hr>
         <div class="choices">
@@ -50,5 +50,7 @@
             </ol>
         </div>
         <hr>
+    {% else %}
+        <a href="{% url 'quiz_list' %}" type="button" class="btn btn-secondary btn-sm">Back To The Quizz List</a>
     {% endif %}
 {% endblock %}

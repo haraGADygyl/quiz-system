@@ -44,12 +44,14 @@
                     {% endfor %}
                 </ul>
             {% else %}
-                <h5>No Questions</h5>
+                <h5>No Questions Yet</h5>
+                <a href="{% url 'quiz_list' %}" type="button" class="btn btn-secondary btn-sm">Back To The Quizz
+                    List</a>
             {% endif %}
         </div>
 
         <div class="col-md-4">
-            <p><h5>Quiz takers: {{ quiz_takers_count }}</h5>
+            <p><h5>Quiz Takers: {{ quiz_takers_count }}</h5>
             <p>
             <ul>
                 {% if quiz_takers %}
@@ -59,7 +61,7 @@
                         </li>
                     {% endfor %}
                 {% else %}
-                    No quiz takers
+                    No Quiz Takers
                 {% endif %}
             </ul>
         </div>
