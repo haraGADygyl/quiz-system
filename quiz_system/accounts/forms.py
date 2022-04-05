@@ -1,7 +1,9 @@
+from django.utils.translation import gettext_lazy as _
+
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.db import transaction
-from django.forms import TextInput
+from django.forms import TextInput, Textarea
 
 from quiz_system.accounts.models import CustomUser, Student
 from quiz_system.main.models import Subject
@@ -17,7 +19,9 @@ class CustomUserCreationForm(UserCreationForm):
 class CustomUserChangeForm(UserChangeForm):
     class Meta:
         model = CustomUser
-        fields = UserChangeForm.Meta.fields  # + 'is_teacher','is_student')
+
+        # fields = UserChangeForm.Meta.fields  # + 'is_teacher','is_student')
+        fields = '__all__'
 
 
 class StudentSignUpForm(UserCreationForm):

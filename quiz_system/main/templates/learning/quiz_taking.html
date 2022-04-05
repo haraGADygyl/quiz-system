@@ -3,7 +3,7 @@
 {% block content %}
     <div class="row">
         <div class="col-md-8">
-            <h3>Test name: {{ quiz.name }}</h3>
+            <h3>Test Name: {{ quiz.name }}</h3>
 
             {% if quiz.get_questions %}
                 <p class="text-muted">Please click the start button to take quiz</p>
@@ -34,7 +34,7 @@
                                 </div>
                             {% endfor %}
                             {% if questions.has_next %}
-                                <button type="submit" name="subsequent_submit" class="btn btn-outline-primary">Submit
+                                <button type="submit" name="subsequent_submit" class="btn btn-outline-success">Submit
                                 </button>
                             {% else %}
                                 <input type="submit" name="final_submit" class="btn btn-outline-danger" value="Submit">
@@ -49,13 +49,13 @@
         </div>
 
         <div class="col-md-4">
-            <p><h5>Quiz takers: {{ quiz_takers_count }}</h5><p>
+            <p><h5>Quiz takers: {{ quiz_takers_count }}</h5>
+            <p>
             <ul>
                 {% if quiz_takers %}
                     {% for quiz_taker in quiz_takers %}
                         <li>
-                            {{ quiz_taker.student }}
-                            {{ quiz_taker.quiz }}
+                            {{ quiz_taker.student }} - {{ quiz_taker.quiz }}
                         </li>
                     {% endfor %}
                 {% else %}
@@ -63,6 +63,5 @@
                 {% endif %}
             </ul>
         </div>
-
     </div>
 {% endblock %}

@@ -27,12 +27,10 @@ class QuestionList(ListView):
 @method_decorator([login_required, teacher_required], name="dispatch")
 class CreateQuestionView(CreateView):
     form_class = QuestionForm
-    # success_url = reverse_lazy('quiz_detail')
     template_name = "learning/question_add.html"
 
 
 class QuestionDetailView(DetailView):
-
     model = Question
     template_name = "learning/question_detail.html"
     # def get_context_data(self, **kwargs):
@@ -46,7 +44,7 @@ class QuestionDetailView(DetailView):
 @method_decorator([login_required, teacher_required], name="dispatch")
 class QuestionUpdateView(UpdateView):
     model = Question
-    template_name = "learning/question_add.html"
+    template_name = "learning/question_update.html"
     fields = "__all__"
 
 
@@ -54,4 +52,6 @@ class QuestionUpdateView(UpdateView):
 class QuestionDeleteView(DeleteView):
     model = Question
     template_name = 'learning/question_confirm_delete.html'
-    success_url = reverse_lazy("question_list")
+
+    def get_success_url(self):
+        return reverse_lazy('quiz_detail', kwargs={'pk': self.object.quiz.pk})

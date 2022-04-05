@@ -1,11 +1,13 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 {% bootstrap_css %}
-{% bootstrap_javascript jquery='full' %}
-{% bootstrap_messages %}
 
 {% block content %}
-    <p class="mb-2"><h2 style="text-align:center;">{{ user }} profile page</h2><p>
+    {% bootstrap_javascript jquery=True %}
+    {% bootstrap_messages %}
+
+
+    <p class="mb-2"><h2 style="text-align:center;">{{ user }} Profile Page</h2><p>
     <div class="row">
         <div class="col-sm-6">
             <form method="post">
@@ -16,17 +18,19 @@
         </div>
     </div>
     <hr>
+    {% if user.is_student %}
+        <div>
+            <h5>Your Interests Are:</h5>
+            <ul>
+                {% for interest in user.student.get_interests %}
+                    <li>{{ interest }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <hr>
+    {% endif %}
     <div>
-        <h5>Your interests are:</h5>
-        <ul>
-            {% for interest in user.student.get_interests %}
-                <li>{{ interest }}</li>
-            {% endfor %}
-        </ul>
-    </div>
-    <hr>
-    <div>
-        <h5>Password management</h5>
+        <h5>Password Management</h5>
         <a href="{% url 'password_change' %}" type="button" class="btn btn-danger">Change Password</a>
     </div>
 {% endblock %}

@@ -22,8 +22,10 @@ class AnswerList(ListView):
 @method_decorator([login_required, teacher_required], name="dispatch")
 class CreateAnswerView(CreateView):
     form_class = AnswerForm
-    template_name = "learning/create_answer.html"
-    success_url = reverse_lazy("question_list")
+    template_name = "learning/answer_create.html"
+
+    def get_success_url(self):
+        return reverse_lazy('question_detail', kwargs={'pk': self.object.question.pk})
 
 
 class AnswerDetailView(DetailView):
@@ -34,7 +36,7 @@ class AnswerDetailView(DetailView):
 @method_decorator([login_required, teacher_required], name="dispatch")
 class AnswerUpdateView(UpdateView):
     model = Answer
-    template_name = "learning/create_answer.html"
+    template_name = "learning/answer_update.html"
     fields = "__all__"
 
 
@@ -42,4 +44,6 @@ class AnswerUpdateView(UpdateView):
 class AnswerDeleteView(DeleteView):
     model = Answer
     template_name = 'learning/answer_confirm_delete.html'
-    success_url = reverse_lazy("quiz_list")
+
+    def get_success_url(self):
+        return reverse_lazy('question_detail', kwargs={'pk': self.object.question.pk})

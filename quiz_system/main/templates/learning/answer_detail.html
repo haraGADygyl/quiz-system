@@ -1,12 +1,17 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h3>Answer Details</h3>
-    <h6>Id: {{ object.pk }} </h6>
-    <h6>{{ object.answer }}</h6>
-    <small>last updated on {{ object.updated_on }}</small>
-    <p>From Question: {{ object.question }}.</p>
+    <h3>Answer: {{ object.answer }}</h3>
+    <h6>ID: {{ object.pk }} </h6>
+    <p>Last Updated On: {{ object.updated_on }}</p>
+    <p>From Quiz: {{ object.quiz }}</p>
+    <p>From Question: {{ object.question }}</p>
+
     {% if user.is_authenticated and user.is_teacher %}
+        <a href="{% url 'question_detail' object.question.pk %}">
+            <button type="button" name="btn_question_details" class="btn btn-secondary btn-sm">Back To The Question
+            </button>
+        </a>
         <a href="{% url 'answer_update' object.pk %}">
             <button type="button" name="btn_answer_detail" class="btn btn-warning btn-sm">Edit Answer</button>
         </a>

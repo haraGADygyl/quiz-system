@@ -2,18 +2,18 @@
 
 {% block content %}
     <p>
-        <h3>Quiz name: {{ object.name }}</h3>
-        <h5 class="text-secondary">Quiz subject: {{ quiz.subject }}</h5>
+        <h3>Quiz Name: {{ object.name }}</h3>
+        <h5 class="text-secondary">Quiz Subject: {{ quiz.subject }}</h5>
     <p>
-    <h6>Last updated on: {{ object.updated_on }}</h6>
+    <h6>Last Updated On: {{ object.updated_on }}</h6>
     <p><h5 class="text-muted">Quiz ID: {{ object.pk }}</h5><p>
-    <p><h5 class="text-muted">Quiz owner: {{ object.owner }}</h5><p>
-    <p><h5 class="text-muted">Total questions: {{ object.get_questions.count }} </h5><p>
+    <p><h5 class="text-muted">Quiz Owner: {{ object.owner }}</h5><p>
+    <p><h5 class="text-muted">Total Questions: {{ object.get_questions.count }} </h5><p>
 
-    {% if user.is_authenticated and user.is_teacher %}
+    {% if user.is_authenticated and user.is_teacher or user.is_superuser %}
         <div class="mt-1">
-            <a href="{% url 'quiz_list' %}" type="button" class="btn btn-primary btn-sm">Back</a>
-            {% if user == object.owner %}
+            <a href="{% url 'quiz_list' %}" type="button" class="btn btn-secondary btn-sm">Back To The Quizz List</a>
+            {% if user == object.owner or user.is_superuser %}
                 <a href="{% url 'quiz_update' object.pk %}">
                     <button type="button" name="btn_quiz_edit" class="btn btn-warning btn-sm">Edit Quiz</button>
                 </a>

@@ -2,35 +2,41 @@
 
 {% block content %}
     <h3>Question: {{ object.question }}</h3>
-    <p>Last updated on: {{ object.updated_on }}</p>
-    <p>From Quiz: {{ object.quiz }}.</p>
+    <p>Last Updated On: {{ object.updated_on }}</p>
+    <p>From Quiz: {{ object.quiz }}</p>
 
     {% if user.is_authenticated and user.is_teacher %}
+        <a href="{% url 'quiz_detail' object.quiz.pk %}">
+            <button type="button" name="btn_question_details" class="btn btn-secondary btn-sm">Back To The Quiz
+            </button>
+        </a>
         <a href="{% url 'question_update' object.pk %}">
             <button type="button" name="btn_question_detail" class="btn btn-warning btn-sm">Edit Question</button>
         </a>
         <a href="{% url 'question_delete' object.pk %}">
             <button type="button" name="btn_question_detail" class="btn btn-danger btn-sm">Delete Question</button>
         </a>
-
         <a href="{% url 'create_answer' %}">
             <button type="button" name="btn_answer_add" class="btn btn-primary btn-sm">Add Answer</button>
         </a>
     {% endif %}
-
     <hr>
-
     <div class="answers">
         <h5>Answers:</h5>
         {{ object.answer_list }}
         <ol type="a">
             {% for answer in object.get_answers %}
                 <a href="{% url 'answer_detail' answer.pk %}">
-                    <li>{{ answer }}</li>
+                    <li>{{ answer }}
+                        {% if answer.is_correct %}
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                 class="bi bi-arrow-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                      d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"></path>
+                            </svg> Correct
+                        {% endif %}
+                    </li>
                 </a>
-                {% if answer.is_correct %}
-                    <div class="success">Is Correct</div>
-                {% endif %}
             {% endfor %}
         </ol>
     </div>
