@@ -2,7 +2,6 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import (
-    ListView,
     CreateView,
     DetailView,
     UpdateView,
@@ -14,11 +13,6 @@ from ..forms import AnswerForm
 from ..models import Answer
 
 
-class AnswerList(ListView):
-    model = Answer
-    template_name = "learning/answer_list.html"
-
-
 @method_decorator([login_required, teacher_required], name="dispatch")
 class CreateAnswerView(CreateView):
     form_class = AnswerForm
@@ -26,6 +20,10 @@ class CreateAnswerView(CreateView):
 
     def get_success_url(self):
         return reverse_lazy('question_detail', kwargs={'pk': self.object.question.pk})
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
 
 class AnswerDetailView(DetailView):
@@ -37,7 +35,11 @@ class AnswerDetailView(DetailView):
 class AnswerUpdateView(UpdateView):
     model = Answer
     template_name = "learning/answer_update.html"
-    fields = "__all__"
+    fields = ('answer', 'is_correct',)
+
+    def form_valid(self, form):
+        form.instance.owner_id = self.request.user.id
+        return super().form_valid(form)
 
 
 @method_decorator([login_required, teacher_required], name="dispatch")

@@ -33,19 +33,17 @@ class CreateQuestionView(CreateView):
 class QuestionDetailView(DetailView):
     model = Question
     template_name = "learning/question_detail.html"
-    # def get_context_data(self, **kwargs):
-    #     # Call the base implementation first to get a context
-    #     context = super().get_context_data(**kwargs)
-    #     # Add in a QuerySet of all the questions
-    #     context['answer_list'] = Answer.objects.filter(question=self.kwargs['pk'])
-    #     return context
 
 
 @method_decorator([login_required, teacher_required], name="dispatch")
 class QuestionUpdateView(UpdateView):
     model = Question
     template_name = "learning/question_update.html"
-    fields = "__all__"
+    fields = ('question',)
+
+    def form_valid(self, form):
+        form.instance.owner_id = self.request.user.id
+        return super().form_valid(form)
 
 
 @method_decorator([login_required, teacher_required], name="dispatch")

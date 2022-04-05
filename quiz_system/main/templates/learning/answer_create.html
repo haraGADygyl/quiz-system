@@ -3,11 +3,15 @@
 {% bootstrap_css %}
 
 {% block content %}
-    <h2>Add Answer</h2>
+    <div class="list-group align-items-center">
+        <h2>Add Answer</h2>
 
-    <form class="" method="post">
-        {% csrf_token %}
-        {% bootstrap_form form %}
-        <button type="submit" name="btn_quiz_create" class="btn btn-primary">Add</button>
-    </form>
+        <form class="" method="post">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            <button type="submit" name="btn_quiz_create" class="btn btn-primary">Add</button>
+{#            <a href="{% url 'question_detail' object.answer.pk %}" type="button" class="btn btn-outline-danger btn-sm">Cancel</a>#}
+{{ request }}
+        </form>
+    </div>
 {% endblock %}

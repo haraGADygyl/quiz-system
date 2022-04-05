@@ -3,11 +3,13 @@
 {% bootstrap_css %}
 
 {% block content %}
-    <h2>Update Quiz</h2>
+    <div class="list-group align-items-center">
+        <h2>Update Quiz</h2>
 
-    <form class="" method="post">
-        {% csrf_token %}
-        {% bootstrap_form form %}
-        <button type="submit" name="btn_quiz_create" class="btn btn-primary">Update</button>
-    </form>
+        <form class="" method="post">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            <button type="submit" name="btn_quiz_create" class="btn btn-primary">Update</button>
+        </form>
+    </div>
 {% endblock %}

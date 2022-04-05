@@ -1,23 +1,30 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h3>Answer: {{ object.answer }}</h3>
-    <h6>ID: {{ object.pk }} </h6>
-    <p>Last Updated On: {{ object.updated_on }}</p>
-    <p>From Quiz: {{ object.quiz }}</p>
-    <p>From Question: {{ object.question }}</p>
+    <div class="list-group align-items-center">
+        <h3>Answer: {{ object.answer }}</h3>
+        <h6>Answer ID: {{ object.pk }} </h6>
+        <p>Last Updated On: {{ object.updated_on }}</p>
+        <p>From Quiz: {{ object.question.quiz }}</p>
+        <p>From Question: {{ object.question }}</p>
+    </div>
 
-    {% if user.is_authenticated and user.is_teacher %}
-        <a href="{% url 'question_detail' object.question.pk %}">
-            <button type="button" name="btn_question_details" class="btn btn-secondary btn-sm">Back To The Question
-            </button>
-        </a>
-        <a href="{% url 'answer_update' object.pk %}">
-            <button type="button" name="btn_answer_detail" class="btn btn-warning btn-sm">Edit Answer</button>
-        </a>
-        <a href="{% url 'answer_delete' object.pk %}">
-            <button type="button" name="btn_answer_detail" class="btn btn-danger btn-sm">Delete Answer</button>
-        </a>
-    {% endif %}
+    <div class="list-group align-items-center">
+        {% if user.is_authenticated and user.is_teacher %}
+            <div class="mt-1">
+                <a href="{% url 'question_detail' object.question.pk %}">
+                    <button type="button" name="btn_question_details" class="btn btn-secondary btn-sm">Back To The
+                        Question
+                    </button>
+                </a>
+                <a href="{% url 'answer_update' object.pk %}">
+                    <button type="button" name="btn_answer_detail" class="btn btn-warning btn-sm">Edit Answer</button>
+                </a>
+                <a href="{% url 'answer_delete' object.pk %}">
+                    <button type="button" name="btn_answer_detail" class="btn btn-danger btn-sm">Delete Answer</button>
+                </a>
+            </div>
+        {% endif %}
+    </div>
     <hr>
 {% endblock %}

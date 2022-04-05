@@ -34,8 +34,8 @@ class QuizList(ListView):
 @method_decorator([login_required, teacher_required], name="dispatch")
 class CreateQuizView(CreateView):
     model = Quiz
+    form_class = QuizForm
     template_name = "learning/quiz_add.html"
-    fields = ('name', 'subject', 'roll_out')
 
     def form_valid(self, form):
         form.instance.owner_id = self.request.user.id
@@ -58,7 +58,11 @@ class QuizDetailView(DetailView):
 class QuizUpdateView(UpdateView):
     model = Quiz
     template_name = "learning/quiz_update.html"
-    fields = "__all__"
+    fields = ('name', 'subject', 'roll_out')
+
+    def form_valid(self, form):
+        form.instance.owner_id = self.request.user.id
+        return super().form_valid(form)
 
 
 @method_decorator([login_required, teacher_required], name="dispatch")

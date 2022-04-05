@@ -7,11 +7,14 @@
 
             {% if quiz.get_questions %}
                 <p class="text-muted">Please click the start button to take quiz</p>
+                <p>
                 <form method="post">
                     {% csrf_token %}
                     <input type="hidden" name="start_quiz" value="{{ quiz.name }}">
-                    <button type="submit" name="button_quiz_taken" class="btn btn-danger mb-2">START</button>
-                </form>
+                    <a href="{% url 'quiz_list' %}" type="button" class="btn btn-secondary btn-sm">Back To The Quizz
+                        List</a>
+                    <button type="submit" name="button_quiz_taken" class="btn btn-danger btn-sm">START</button>
+                </form><p>
 
                 <h5>Questions: </h5>
                 <ul class="list-group">

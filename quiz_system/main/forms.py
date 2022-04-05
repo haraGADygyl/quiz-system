@@ -8,12 +8,12 @@ from .models import Quiz, Question, Answer
 class QuizForm(ModelForm):
     class Meta:
         model = Quiz
-        # fields = ('name', 'subject', 'roll_out')
-        fields = "__all__"
+        fields = ('name', 'subject', 'roll_out')
+
         widgets = {
             'name': TextInput(
                 attrs={
-                    'placeholder': 'Enter quiz name',
+                    'placeholder': 'Enter a question',
                 }
             ),
         }
@@ -36,7 +36,8 @@ class QuestionForm(ModelForm):
 class AnswerForm(ModelForm):
     class Meta:
         model = Answer
-        fields = "__all__"
+        # fields = "__all__"
+        fields = ('answer', 'is_correct',)
 
         widgets = {
             'answer': TextInput(

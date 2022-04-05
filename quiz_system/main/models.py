@@ -18,7 +18,6 @@ class Quiz(models.Model):
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
-    # TODO: check how to abstract users.CustomUser
     owner = models.ForeignKey("accounts.CustomUser", on_delete=models.CASCADE)
     roll_out = models.BooleanField(default=False)
 
@@ -48,7 +47,6 @@ class Question(models.Model):
         return reverse("question_detail", kwargs={"pk": self.pk})
 
     def __str__(self):
-        # TODO: maybe rename question to name
         return self.question
 
     class Meta:
@@ -75,7 +73,6 @@ class QuizTaker(models.Model):
     )
     correct_answers = models.IntegerField(default=0)
     completed = models.BooleanField(default=False)
-    # TODO: check where is this used
     start_time = models.DateTimeField(auto_now_add=True)
     end_time = models.DateTimeField(auto_now=True)
 
@@ -84,7 +81,6 @@ class QuizTaker(models.Model):
 
     def get_percentage_score(self):
         questions = self.quiz.get_questions().count()
-        # TODO: refactor this to remove try except
         try:
             score = self.correct_answers / questions * 100
         except ZeroDivisionError:
@@ -94,7 +90,7 @@ class QuizTaker(models.Model):
 
     def save(self, *args, **kwargs):
         if self.quiz.subject in self.student.get_interests():
-            return super(QuizTaker, self).save(*args, **kwargs)
+            return super().save(*args, **kwargs)
 
     def __str__(self):
         return self.student.user.username
@@ -116,7 +112,7 @@ class QuizTakerResponse(models.Model):
             )
         else:
             self.quiztaker.end_time = F(timezone.now())
-            return super(QuizTakerResponse, self).save(*args, **kwargs)
+            return super().save(*args, **kwargs)
 
     def __str__(self):
         return self.question.question

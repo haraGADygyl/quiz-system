@@ -2,7 +2,7 @@
 
 {% block content %}
     {% if user.is_authenticated and user.is_teacher %}
-        <div>
+        <div class="text-center">
             <h3>My Quizzes</h3>
         </div>
     {% endif %}
@@ -11,7 +11,7 @@
 
     {% if user.is_authenticated and user.is_student %}
         {% if object_list %}
-            <div class="list-group">
+            <div class="list-group align-items-center">
                 {% for quiz in object_list %}
                     {% if quiz.subject in user.student.interests.all and quiz.roll_out %}
 
@@ -43,7 +43,7 @@
             </div>
         {% endif %}
     {% else %}
-        <div class="list-group">
+        <div class="list-group align-items-center">
         {% for quiz in object_list %}
             {% if user == quiz.owner %}
                 <div class="list-group-item mb-2">
@@ -69,7 +69,7 @@
 
     {% if user.is_superuser %}
         {% if object_list %}
-            <div class="list-group">
+            <div class="list-group align-items-center">
                 {% for quiz in object_list %}
                     <div class="list-group-item mb-2">
                         <h4 class="list-group-item-heading">Quiz Name: {{ quiz.name }}</h4>
