@@ -7,7 +7,32 @@
         </div>
     {% endif %}
 
-
+    {% if not user.is_authenticated %}
+        {% for quiz in object_list %}
+            {% if quiz.roll_out %}
+                <div class="list-group align-items-center">
+                    <div class="list-group-item mb-2">
+                        <h4 class="list-group-item-heading">Quiz Name: {{ quiz.name }}</h4>
+                        <div class="list-group-item-text">
+                            <p class="text-secondary">Quiz Subject: {{ quiz.subject }} </p>
+                            <p>Last Updated On: {{ quiz.updated_on }}</p>
+                            <p><h6>Owner: {{ quiz.owner }}</h6>
+                            <p>
+                                {% if not quiz.roll_out %}
+                                    <p class="text-danger">Status: Not active</p>
+                                {% else %}
+                                    <p class="text-success">Status: Active</p>
+                                {% endif %}
+                            <a href="{% url 'quiz_detail' quiz.pk %}">
+                                <button type="button" name="btn_quiz_list" class="btn btn-info btn-sm ml-2">Details
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
 
     {% if user.is_authenticated and user.is_student %}
         {% if object_list %}

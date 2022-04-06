@@ -1,39 +1,36 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h3>Questions</h3>
-    {% if user.is_authenticated and user.is_teacher %}
-        <div class="">
-            <a href="{% url 'create_question' %}">
-                <button type="button" name="btn_question_add" class="btn btn-primary btn-sm">Create Question</button>
-            </a>
-        </div>
-    {% endif %}
-    {% if object_list %}
-        <ul class="list-group mt-2">
-            {% for question in object_list %}
-                <li class="list-group-item mb-3">
-                    {{ question.question }}
-                    <em>{{ question.quiz }}</em>
-                    <a href="{% url 'question_detail' question.pk %}">
-                        <button type="button" name="btn_question_details" class="btn btn-default btn-sm">Details
-                        </button>
-                    </a>
-                </li>
-            {% endfor %}
-        </ul>
-        <div class="pagination">
+    <h3 class="text-center">Questions:</h3>
+    <div class="list-group align-items-center">
+        {% if object_list %}
+            <ul class="list-group mt-2">
+                {% for question in object_list %}
+                    <li class="list-group-item mb-3">
+                        {{ question.question }} / {{ question.quiz }}
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'question_detail' question.pk %}">
+                                <button type="button" name="btn_question_details" class="btn btn-default btn-sm">Details
+                                </button>
+                            </a>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+            <div class="pagination">
       <span class="step-links">
         {% if page_obj.has_previous %}
-            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            <a href="?page={{ page_obj.previous_page_number }}" type="button"
+               class="btn btn-primary btn-sm">Previous</a>
         {% endif %}
           <span class="current">
-          Page {{ page_obj.number }} of {{ paginator.num_pages }}.
+          Page {{ page_obj.number }} of {{ paginator.num_pages }}
         </span>
           {% if page_obj.has_next %}
-              <a href="?page={{ page_obj.next_page_number }}">next</a>
+              <a href="?page={{ page_obj.next_page_number }}" type="button" class="btn btn-primary btn-sm">Next</a>
           {% endif %}
       </span>
-        </div>
-    {% endif %}
+            </div>
+        {% endif %}
+    </div>
 {% endblock %}

@@ -4,12 +4,12 @@
 
 {% block content %}
     <div class="list-group align-items-center">
-        <h2>Update Quiz</h2>
+        <h2>Edit Quiz</h2>
 
         <form class="" method="post">
             {% csrf_token %}
             {% bootstrap_form form %}
-            <button type="submit" name="btn_quiz_create" class="btn btn-primary">Update</button>
+            <button type="submit" name="btn_quiz_create" class="btn btn-primary">Edit</button>
         </form>
     </div>
 {% endblock %}
