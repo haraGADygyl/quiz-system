@@ -103,6 +103,12 @@
                             <p>Last Updated On: {{ quiz.updated_on }}<p>
                             <p><h6>Owner: {{ quiz.owner }}</h6>
                             <p>
+                            <p>
+                                {% if not quiz.roll_out %}
+                                    <p class="text-danger">Status: Not active</p>
+                                {% else %}
+                                    <p class="text-success">Status: Active</p>
+                                {% endif %}
                                 <a href="{% url 'quiz_detail' quiz.pk %}">
                                     <button type="button" name="btn_quiz_list" class="btn btn-info btn-sm ml-2">
                                         Details
@@ -119,5 +125,4 @@
             </div>
         {% endif %}
     {% endif %}
-
 {% endblock %}

@@ -1,11 +1,8 @@
-import io
 import logging
 
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db.models import F
-from django.forms import Textarea
-from django.http import JsonResponse, FileResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
@@ -16,7 +13,6 @@ from django.views.generic import (
     DeleteView,
 )
 from django.views.generic.detail import DetailView
-from reportlab.pdfgen import canvas
 
 from ..decorators import teacher_required, student_required
 from ..forms import QuizForm
@@ -131,95 +127,3 @@ def quiz_taking(request, pk):
                 )  # Maybe change redirect to reverse
 
     return render(request, "learning/quiz_taking.html", context)
-
-
-@login_required
-@student_required
-def quiz_results(request, pk):
-    # if request.session['quiz_taker_id']:
-    quiz_taker_id = request.session["quiz_taker_id"]
-    quiz_results = QuizTakerResponse.objects.filter(
-        quiztaker=quiz_taker_id, question__quiz=pk
-    )
-    quiz_taker = QuizTaker.objects.get(id=quiz_taker_id)
-    # correct_responses = QuizTakerResponse.objects.filter(quiztaker=quiz_taker_id,question__quiz=pk,
-    # answer__is_correct=True).count() update the correct answers for the quiz_taker
-    correct_responses = quiz_taker.correct_answers
-    context = {
-        "quiz_taker": quiz_taker,
-        "quiz_results": quiz_results,
-        "quiz_results_count": quiz_results.count(),
-        "correct_responses": correct_responses,
-        # 'score': score,
-        "score": quiz_taker.get_percentage_score(),
-    }
-    return render(request, "learning/quiz_result.html", context)
-
-
-def quiz_results_chart(request, pk):
-    quiz_taker_id = request.session["quiz_taker_id"]
-    quiz_taker = QuizTaker.objects.get(id=quiz_taker_id)
-
-    score = quiz_taker.get_percentage_score()
-    wrong_scores = 100 - score
-    labels = ["Correct Answers", "Wrong Answers"]
-    data_items = [score, wrong_scores]
-
-    # Retrieve all quizzes taken by the student
-    quizzes_taken = QuizTaker.objects.filter(student__user=request.user)
-    x_labels = []
-    y_values = []
-    i = 1
-    if quizzes_taken:
-        for quiz in quizzes_taken:
-            y_values.append(quiz.get_percentage_score())
-            x_labels.append(f"Attempt {i}")
-            i += 1
-
-    return JsonResponse(
-        data={
-            "labels": labels,
-            "data_items": data_items,
-            "x_labels": x_labels,
-            "y_values": y_values,
-        }
-    )
-
-
-def generate_results_pdf(request, pk):
-    # Create a file-like buffer to receive PDF data.
-    buffer = io.BytesIO()
-
-    # Create the PDF object, using the buffer as its "file."
-    p = canvas.Canvas(buffer)
-
-    # Draw things on the PDF. Here's where the PDF generation happens.
-    # See the ReportLab documentation for the full list of functionality.
-    pdf_ruler(p)
-    # p.drawCenteredString(300, 780, "Hello world.")
-
-    # Close the PDF object cleanly, and we're done.
-    p.showPage()
-    p.save()
-
-    # FileResponse sets the Content-Disposition header so that browsers
-    # present the option to save the file.
-    buffer.seek(0)
-    return FileResponse(buffer, as_attachment=True, filename="results.pdf")
-
-
-def pdf_ruler(canvas_data):
-    canvas_data.drawString(100, 830, "x100")
-    canvas_data.drawString(200, 810, "x200")
-    canvas_data.drawString(300, 810, "x300")
-    canvas_data.drawString(400, 810, "x400")
-    canvas_data.drawString(500, 810, "x500")
-
-    canvas_data.drawString(10, 100, "y100")
-    canvas_data.drawString(10, 200, "y200")
-    canvas_data.drawString(10, 300, "y300")
-    canvas_data.drawString(10, 400, "y400")
-    canvas_data.drawString(10, 500, "y500")
-    canvas_data.drawString(10, 600, "y600")
-    canvas_data.drawString(10, 700, "y700")
-    canvas_data.drawString(10, 800, "y800")

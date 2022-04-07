@@ -2,7 +2,6 @@ from django.urls import path
 
 from quiz_system.main.views import HomePageView
 from quiz_system.main.views.answers import (
-    # AnswerList,
     CreateAnswerView,
     AnswerDetailView,
     AnswerUpdateView,
@@ -22,9 +21,6 @@ from quiz_system.main.views.quiz import (
     QuizUpdateView,
     QuizDeleteView,
     quiz_taking,
-    quiz_results,
-    quiz_results_chart,
-    generate_results_pdf,
 )
 
 urlpatterns = [
@@ -36,9 +32,6 @@ urlpatterns = [
     path('quiz/<int:pk>/update/', QuizUpdateView.as_view(), name='quiz_update'),
     path('quiz/<int:pk>/delete/', QuizDeleteView.as_view(), name='quiz_delete'),
     path('quiz/<int:pk>/take/', quiz_taking, name='take_quiz'),
-    path('quiz/<int:pk>/result/', quiz_results, name='quiz_result'),
-    path('quiz/<int:pk>/result-chart/', quiz_results_chart, name='result-chart'),
-    path('quiz/<int:pk>/result/pdf/', generate_results_pdf, name='results_pdf'),
 
     path('question/', QuestionList.as_view(), name='question_list'),
     path('question/add/', CreateQuestionView.as_view(), name='create_question'),

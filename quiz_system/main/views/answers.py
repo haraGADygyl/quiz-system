@@ -21,10 +21,6 @@ class CreateAnswerView(CreateView):
     def get_success_url(self):
         return reverse_lazy('question_detail', kwargs={'pk': self.object.question.pk})
 
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super().form_valid(form)
-
 
 class AnswerDetailView(DetailView):
     model = Answer
