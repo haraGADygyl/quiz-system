@@ -26,6 +26,8 @@ class QuizList(ListView):
     model = Quiz
     template_name = "learning/quiz_list.html"
 
+    ordering = '-roll_out'
+
 
 @method_decorator([login_required, teacher_required], name="dispatch")
 class CreateQuizView(CreateView):
@@ -68,6 +70,11 @@ class QuizDeleteView(DeleteView):
     success_url = reverse_lazy("quiz_list")
 
 
+class QuizQuestionsListView(ListView):
+    model = Quiz
+    template_name = 'learning/quiz_taking_questions.html'
+
+
 # Student taking Quiz
 @login_required
 @student_required
@@ -104,7 +111,7 @@ def quiz_taking(request, pk):
             request.session["taker"] = quiz_taker.student.user.username
             try:
                 question = Question.objects.get(question=request.POST.get("question"))
-                answer = Answer.objects.get(answer=request.POST.get("question_choice"))
+                answer = Answer.objects.get(answer=request.session["question_choice"])
             except Question.DoesNotExist as e:
                 logger.exception(f"Question Exception DoesNotExist {e}")
                 raise
@@ -127,3 +134,22 @@ def quiz_taking(request, pk):
                 )  # Maybe change redirect to reverse
 
     return render(request, "learning/quiz_taking.html", context)
+
+
+@login_required
+@student_required
+def quiz_results(request, pk):
+    quiz_taker_id = request.session['quiz_taker_id']
+    quiz_results = QuizTakerResponse.objects.filter(quiztaker=quiz_taker_id, question__quiz=pk)
+    quiz_taker = QuizTaker.objects.get(id=quiz_taker_id)
+    correct_responses = quiz_taker.correct_answers
+
+    context = {
+        'quiz_taker': quiz_taker,
+        'quiz_results': quiz_results,
+        'quiz_results_count': quiz_results.count(),
+        'correct_responses': correct_responses,
+        'score': quiz_taker.get_percentage_score(),
+    }
+
+    return render(request, "learning/quiz_result.html", context)

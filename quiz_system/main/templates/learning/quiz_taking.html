@@ -2,7 +2,7 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-8 mt-3">
             <h3>Test Name: {{ quiz.name }}</h3>
 
             {% if quiz.get_questions %}
@@ -51,22 +51,6 @@
                 <a href="{% url 'quiz_list' %}" type="button" class="btn btn-secondary btn-sm">Back To The Quizz
                     List</a>
             {% endif %}
-        </div>
-
-        <div class="col-md-4">
-            <p><h5>Quiz Takers: {{ quiz_takers_count }}</h5>
-            <p>
-            <ul>
-                {% if quiz_takers %}
-                    {% for quiz_taker in quiz_takers %}
-                        <li>
-                            {{ quiz_taker.student }} - {{ quiz_taker.quiz }}
-                        </li>
-                    {% endfor %}
-                {% else %}
-                    No Quiz Takers
-                {% endif %}
-            </ul>
         </div>
     </div>
 {% endblock %}

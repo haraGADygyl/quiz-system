@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 
 class QuestionList(ListView):
     model = Question
-    paginate_by = 3
+    paginate_by = 2
     template_name = "learning/question_list.html"
 
 

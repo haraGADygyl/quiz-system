@@ -1,5 +1,3 @@
-# from ckeditor.widgets import CKEditorWidget
-
 from django.forms import ModelForm, TextInput
 
 from .models import Quiz, Question, Answer
