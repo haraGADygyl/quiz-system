@@ -6,9 +6,15 @@
         {% if object_list %}
             <ol class="list-group mt-2">
                 {% for question in object_list %}
-                    <li class="list-group-item mb-3">
-                        {{ question }} / {{ question.quiz }}
-                    </li>
+                    {% if question.quiz.roll_out %}
+                        <li class="list-group-item mb-3">
+                            {{ question }} -> {{ question.quiz }}
+                        </li>
+                        {% else %}
+                        <li class="list-group-item mb-3">
+                            <p>Hidden question</p>
+                        </li>
+                    {% endif %}
                 {% endfor %}
             </ol>
 

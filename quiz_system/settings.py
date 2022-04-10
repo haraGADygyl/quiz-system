@@ -35,10 +35,13 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "crispy_forms",
-    "bootstrap4",
+
     "quiz_system.main",
     "quiz_system.accounts",
+
+    # 3rd party
+    "crispy_forms",
+    "bootstrap4",
 ]
 
 AUTH_USER_MODEL = "accounts.CustomUser"

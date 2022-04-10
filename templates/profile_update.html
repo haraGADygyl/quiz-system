@@ -35,4 +35,10 @@
         <h5>Password Management</h5>
         <a href="{% url 'password_change' %}" type="button" class="btn btn-danger">Change Password</a>
     </div>
+    <hr>
+    <div>
+        <h5>Delete Profile</h5>
+        <a href="{% url 'delete_profile' user.pk %}" type="button" class="btn btn-danger">Delete Profile</a>
+    </div>
+    <hr>
 {% endblock %}

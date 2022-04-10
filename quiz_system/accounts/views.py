@@ -3,7 +3,7 @@ from django.contrib.auth.models import Group
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, TemplateView, UpdateView
+from django.views.generic import CreateView, TemplateView, UpdateView, DeleteView
 
 from .forms import StudentSignUpForm, TeacherSignUpForm
 from .models import CustomUser
@@ -57,3 +57,10 @@ class ProfileUpdateView(SuccessMessageMixin, UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('profile', kwargs={'pk': self.object.id})
+
+
+class ProfileDeleteView(DeleteView):
+    model = CustomUser
+    template_name = 'profile_delete.html'
+    fields = ("username", "email", "first_name", "last_name")
+    success_url = '/'

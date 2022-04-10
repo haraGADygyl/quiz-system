@@ -1,26 +1,29 @@
-from django.utils.translation import gettext_lazy as _
-
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.db import transaction
-from django.forms import TextInput, Textarea
+from django.forms import TextInput
 
 from quiz_system.accounts.models import CustomUser, Student
 from quiz_system.main.models import Subject
 
 
 class CustomUserCreationForm(UserCreationForm):
-    class Meta(UserCreationForm):
+    """
+    Creates a student user via the admin panel
+    """
+
+    class Meta:
         model = CustomUser
-        fields = ("username", "email")  # '__all__'
-        # fields = UserCreationForm.Meta.fields + ('username','email')
+        fields = ("username", "email")
 
 
 class CustomUserChangeForm(UserChangeForm):
+    """
+    Edit any user via the admin panel
+    """
+
     class Meta:
         model = CustomUser
-
-        # fields = UserChangeForm.Meta.fields  # + 'is_teacher','is_student')
         fields = '__all__'
 
 
@@ -31,15 +34,19 @@ class StudentSignUpForm(UserCreationForm):
         required=True,
     )
 
-    class Meta(UserCreationForm.Meta):
+    class Meta:
         model = CustomUser
-
+        fields = ('username',)
         widgets = {
             'username': TextInput(
                 attrs={
-                    'placeholder': 'Enter username',
+                    'placeholder': 'Enter your username',
                 }
             ),
+        }
+
+        help_texts = {
+            'username': None,
         }
 
     @transaction.atomic
@@ -56,15 +63,19 @@ class StudentSignUpForm(UserCreationForm):
 
 
 class TeacherSignUpForm(UserCreationForm):
-    class Meta(UserCreationForm.Meta):
+    class Meta:
         model = CustomUser
-
+        fields = ('username',)
         widgets = {
             'username': TextInput(
                 attrs={
-                    'placeholder': 'Enter username',
+                    'placeholder': 'Enter your username',
                 }
             ),
+        }
+
+        help_texts = {
+            'username': None,
         }
 
     def save(self, commit=True):
