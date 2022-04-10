@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="text-center mt-5">
+        <form method="post">
+            {% csrf_token %}
+            <p>Are you sure you want to delete "{{ user }}" profile?</p>
+            <button {% url 'index' %} class="btn btn-danger">Delete</button>
+            <a href="{% url 'profile' user.pk %}" type="button" class="btn btn-outline-danger">Cancel</a>
+        </form>
+    </div>
+
+{% endblock %}
