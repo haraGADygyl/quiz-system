@@ -8,7 +8,7 @@
 
 
     <p class="mt-3">
-    <h2 style="text-align:center;">{{ user }} Profile Page</h2>
+    <h2 style="text-align:center;">Profile Page: {{ user }}</h2>
     <p>
     <div class="row">
         <div class="col-sm-6">
@@ -20,17 +20,6 @@
         </div>
     </div>
     <hr>
-    {% if user.is_student %}
-        <div>
-            <h5>Your Interests Are:</h5>
-            <ul>
-                {% for interest in user.student.get_interests %}
-                    <li>{{ interest }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-        <hr>
-    {% endif %}
     <div>
         <h5>Password Management</h5>
         <a href="{% url 'password_change' %}" type="button" class="btn btn-danger">Change Password</a>
@@ -40,5 +29,4 @@
         <h5>Delete Profile</h5>
         <a href="{% url 'delete_profile' user.pk %}" type="button" class="btn btn-danger">Delete Profile</a>
     </div>
-    <hr>
 {% endblock %}

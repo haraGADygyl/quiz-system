@@ -70,12 +70,6 @@ class QuizDeleteView(DeleteView):
     success_url = reverse_lazy("quiz_list")
 
 
-class QuizQuestionsListView(ListView):
-    model = Quiz
-    template_name = 'learning/quiz_taking_questions.html'
-
-
-# Student taking Quiz
 @login_required
 @student_required
 def quiz_taking(request, pk):
