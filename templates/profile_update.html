@@ -3,19 +3,19 @@
 {% bootstrap_css %}
 
 {% block content %}
-    {% bootstrap_javascript jquery=True %}
     {% bootstrap_messages %}
-
+    {% bootstrap_javascript jquery=True %}
 
     <p class="mt-3">
-    <h2 style="text-align:center;">Profile Page: {{ user }}</h2>
+    <h2 class="text-center font-weight-bold">@{{ user }}</h2>
+    <h2 class="text-center">({{ user.first_name }} {{ user.last_name }})</h2>
     <p>
     <div class="row">
         <div class="col-sm-6">
             <form method="post">
                 {% csrf_token %}
                 {% bootstrap_form form %}
-                <button type="submit" name="btn_quiz_create" class="btn btn-primary">Update</button>
+                <button type="submit" class="btn btn-primary">Update</button>
             </form>
         </div>
     </div>

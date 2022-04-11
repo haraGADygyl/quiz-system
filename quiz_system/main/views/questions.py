@@ -8,7 +8,7 @@ from django.views.generic import (
     ListView,
     UpdateView,
     DeleteView,
-)  # ,DetailView
+)
 from django.views.generic.detail import DetailView
 
 from ..decorators import teacher_required

@@ -46,14 +46,24 @@ class TeacherSignUpView(CreateView):
         user.groups.add(group)
 
         login(self.request, user)
-        return redirect("create_quiz")
+        return redirect("quiz_list")
 
 
 class ProfileUpdateView(SuccessMessageMixin, UpdateView):
     model = CustomUser
     template_name = "profile_update.html"
     fields = ("username", "email", "first_name", "last_name")
-    success_message = 'Your profile has been updated.'
+    success_message = 'Your profile has been updated successfully'
+
+    class Meta:
+        help_texts = {
+            'username': None,
+        }
+
+    def get_form(self, *args, **kwargs):
+        form = super().get_form(*args, **kwargs)
+        form.fields['username'].help_text = None
+        return form
 
     def get_success_url(self):
         return reverse_lazy('profile', kwargs={'pk': self.object.id})

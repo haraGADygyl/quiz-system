@@ -28,6 +28,12 @@ class CustomUserChangeForm(UserChangeForm):
 
 
 class StudentSignUpForm(UserCreationForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        for fieldname in ['username', 'password1', 'password2']:
+            self.fields[fieldname].help_text = None
+
     interests = forms.ModelMultipleChoiceField(
         queryset=Subject.objects.all(),
         widget=forms.CheckboxSelectMultiple,
@@ -36,17 +42,13 @@ class StudentSignUpForm(UserCreationForm):
 
     class Meta:
         model = CustomUser
-        fields = ('username',)
+        fields = ('username', 'password1', 'password2')
         widgets = {
             'username': TextInput(
                 attrs={
                     'placeholder': 'Enter your username',
                 }
             ),
-        }
-
-        help_texts = {
-            'username': None,
         }
 
     @transaction.atomic
@@ -63,19 +65,21 @@ class StudentSignUpForm(UserCreationForm):
 
 
 class TeacherSignUpForm(UserCreationForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        for fieldname in ['username', 'password1', 'password2']:
+            self.fields[fieldname].help_text = None
+
     class Meta:
         model = CustomUser
-        fields = ('username',)
+        fields = ('username', 'password1', 'password2')
         widgets = {
             'username': TextInput(
                 attrs={
                     'placeholder': 'Enter your username',
                 }
             ),
-        }
-
-        help_texts = {
-            'username': None,
         }
 
     def save(self, commit=True):

@@ -11,7 +11,7 @@ class QuizForm(ModelForm):
         widgets = {
             'name': TextInput(
                 attrs={
-                    'placeholder': 'Enter a question',
+                    'placeholder': 'Enter a quiz name',
                 }
             ),
         }
@@ -35,7 +35,6 @@ class AnswerForm(ModelForm):
     class Meta:
         model = Answer
         fields = "__all__"
-        # fields = ('answer', 'is_correct',)
 
         widgets = {
             'answer': TextInput(

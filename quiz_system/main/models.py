@@ -5,7 +5,9 @@ from django.utils import timezone
 
 
 class Subject(models.Model):
-    name = models.CharField(max_length=100, unique=True)
+    name = models.CharField(max_length=100, unique=True, error_messages={
+        "unique": "There is already a subject with this name."
+    })
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 
@@ -14,7 +16,9 @@ class Subject(models.Model):
 
 
 class Quiz(models.Model):
-    name = models.CharField(max_length=100, unique=True)
+    name = models.CharField(max_length=100, unique=True, error_messages={
+        "unique": "There is already a quiz with this name."
+    })
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
@@ -36,7 +40,9 @@ class Quiz(models.Model):
 
 
 class Question(models.Model):
-    question = models.CharField(max_length=250)
+    question = models.CharField(max_length=250, unique=True, error_messages={
+        "unique": "There is already a question with this name."
+    })
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
     updated_on = models.DateTimeField(auto_now=True)
 
@@ -54,7 +60,9 @@ class Question(models.Model):
 
 
 class Answer(models.Model):
-    answer = models.CharField(max_length=250)
+    answer = models.CharField(max_length=250, unique=True, error_messages={
+        "unique": "There is already an answer with this name."
+    })
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     is_correct = models.BooleanField(default=False)
     updated_on = models.DateTimeField(auto_now=True)
