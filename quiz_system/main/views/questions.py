@@ -26,7 +26,10 @@ class QuestionList(ListView):
 
 @method_decorator([login_required, teacher_required], name="dispatch")
 class CreateQuestionView(CreateView):
-    form_class = QuestionForm
+    a=1
+    # form_class = QuestionForm
+    model = Question
+    fields = ('question', 'quiz')
     template_name = "learning/question_add.html"
 
 

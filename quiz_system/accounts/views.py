@@ -5,7 +5,7 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, TemplateView, UpdateView, DeleteView
 
-from .forms import StudentSignUpForm, TeacherSignUpForm
+from .forms import StudentSignUpForm, TeacherSignUpForm, UserModel
 from .models import CustomUser
 
 
@@ -14,7 +14,7 @@ class SignupView(TemplateView):
 
 
 class StudentSignUpView(CreateView):
-    model = CustomUser
+    # model = CustomUser
     form_class = StudentSignUpForm
     template_name = "student_signup.html"
 
@@ -29,7 +29,7 @@ class StudentSignUpView(CreateView):
 
 
 class TeacherSignUpView(CreateView):
-    model = CustomUser
+    # model = CustomUser
     form_class = TeacherSignUpForm
     template_name = "teacher_signup.html"
 
@@ -50,15 +50,11 @@ class TeacherSignUpView(CreateView):
 
 
 class ProfileUpdateView(SuccessMessageMixin, UpdateView):
-    model = CustomUser
+    # model = CustomUser
+    model = UserModel
     template_name = "profile_update.html"
     fields = ("username", "email", "first_name", "last_name")
     success_message = 'Your profile has been updated successfully'
-
-    class Meta:
-        help_texts = {
-            'username': None,
-        }
 
     def get_form(self, *args, **kwargs):
         form = super().get_form(*args, **kwargs)
@@ -70,7 +66,8 @@ class ProfileUpdateView(SuccessMessageMixin, UpdateView):
 
 
 class ProfileDeleteView(DeleteView):
-    model = CustomUser
+    # model = CustomUser
+    model = UserModel
     template_name = 'profile_delete.html'
     fields = ("username", "email", "first_name", "last_name")
     success_url = '/'

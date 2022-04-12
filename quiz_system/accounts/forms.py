@@ -1,10 +1,13 @@
 from django import forms
+from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.db import transaction
 from django.forms import TextInput
 
 from quiz_system.accounts.models import CustomUser, Student
 from quiz_system.main.models import Subject
+
+UserModel = get_user_model()
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -13,7 +16,8 @@ class CustomUserCreationForm(UserCreationForm):
     """
 
     class Meta:
-        model = CustomUser
+        # model = CustomUser
+        model = UserModel
         fields = ("username", "email")
 
 
@@ -23,7 +27,8 @@ class CustomUserChangeForm(UserChangeForm):
     """
 
     class Meta:
-        model = CustomUser
+        # model = CustomUser
+        model = UserModel
         fields = '__all__'
 
 
@@ -41,7 +46,8 @@ class StudentSignUpForm(UserCreationForm):
     )
 
     class Meta:
-        model = CustomUser
+        # model = CustomUser
+        model = UserModel
         fields = ('username', 'password1', 'password2')
         widgets = {
             'username': TextInput(
@@ -72,7 +78,8 @@ class TeacherSignUpForm(UserCreationForm):
             self.fields[fieldname].help_text = None
 
     class Meta:
-        model = CustomUser
+        # model = CustomUser
+        model = UserModel
         fields = ('username', 'password1', 'password2')
         widgets = {
             'username': TextInput(
