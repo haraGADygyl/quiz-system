@@ -26,7 +26,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     '127.0.0.1',
-    'https://softuni-quiz-system.herokuapp.com/',
+    'softuni-quiz-system.herokuapp.com',
 ]
 
 # Application definition
