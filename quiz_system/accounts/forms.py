@@ -39,6 +39,9 @@ class StudentSignUpForm(UserCreationForm):
         for fieldname in ['username', 'password1', 'password2']:
             self.fields[fieldname].help_text = None
 
+        self.fields['password1'].label = 'Enter your password'
+        self.fields['password2'].label = 'Re-Enter your password'
+
     interests = forms.ModelMultipleChoiceField(
         queryset=Subject.objects.all(),
         widget=forms.CheckboxSelectMultiple,
@@ -76,6 +79,9 @@ class TeacherSignUpForm(UserCreationForm):
 
         for fieldname in ['username', 'password1', 'password2']:
             self.fields[fieldname].help_text = None
+
+        self.fields['password1'].label = 'Enter your password'
+        self.fields['password2'].label = 'Re-Enter your password'
 
     class Meta:
         # model = CustomUser

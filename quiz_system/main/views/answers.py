@@ -22,6 +22,7 @@ class CreateAnswerView(CreateView):
         return reverse_lazy('question_detail', kwargs={'pk': self.object.question.pk})
 
 
+@method_decorator([login_required, teacher_required], name="dispatch")
 class AnswerDetailView(DetailView):
     model = Answer
     template_name = "learning/answer_detail.html"

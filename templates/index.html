@@ -12,9 +12,9 @@
                     <p>As a student you can take quizzes created by your teachers.</p>
                     <p><strong>Your interests are: </strong></p>
                     <ul>
-                        {% for subject in user.student.get_interests %}
+                        {% for interest in user.student.get_interests %}
                             <li>
-                                {{ subject }}
+                                {{ interest }}
                             </li>
                         {% endfor %}
                     </ul>

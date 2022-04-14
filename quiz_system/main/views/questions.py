@@ -18,6 +18,7 @@ from ..models import Question
 logger = logging.getLogger(__name__)
 
 
+# @method_decorator([login_required, teacher_required], name="dispatch")
 class QuestionList(ListView):
     model = Question
     paginate_by = 2
@@ -26,13 +27,13 @@ class QuestionList(ListView):
 
 @method_decorator([login_required, teacher_required], name="dispatch")
 class CreateQuestionView(CreateView):
-    a=1
     # form_class = QuestionForm
     model = Question
     fields = ('question', 'quiz')
     template_name = "learning/question_add.html"
 
 
+@method_decorator([login_required, teacher_required], name="dispatch")
 class QuestionDetailView(DetailView):
     model = Question
     template_name = "learning/question_detail.html"
