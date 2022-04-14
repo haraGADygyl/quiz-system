@@ -24,7 +24,10 @@ SECRET_KEY = "django-insecure-^4*+rea@uvgrf4=12@+rj$g_rxse9-5bquk60(x4urvx*&8so&
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'https://softuni-quiz-system.herokuapp.com/',
+]
 
 # Application definition
 
@@ -47,6 +50,7 @@ INSTALLED_APPS = [
 AUTH_USER_MODEL = "accounts.CustomUser"
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -78,6 +82,17 @@ WSGI_APPLICATION = "quiz_system.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
+
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": "quiz_db",
+#         "USER": "postgres",
+#         "PASSWORD": "manushev",
+#         "HOST": "127.0.0.1",
+#         "PORT": "5433",
+#     }
+# }
 
 DATABASES = {
     "default": {
@@ -122,12 +137,21 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = "/static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "static", "static-only")
+# STATIC_URL = "/static/"
+# STATIC_ROOT = os.path.join(BASE_DIR, "static", "static-only")
+# STATICFILES_DIRS = (
+#     # os.path.join(os.path.dirname(BASE_DIR), "static","static"),
+#     os.path.join(BASE_DIR, "static"),
+# )
+
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_URL = '/static/'
+
+# Extra places for collectstatic to find static files.
 STATICFILES_DIRS = (
-    # os.path.join(os.path.dirname(BASE_DIR), "static","static"),
-    os.path.join(BASE_DIR, "static"),
+    BASE_DIR / 'static',
 )
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
