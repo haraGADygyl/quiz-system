@@ -1,2 +1,2 @@
-web: gunicorn --pythonpath quiz_system quiz_system.main.wsgi
+web: gunicorn --pythonpath quiz_system quiz_system.wsgi
 release: python manage.py migrate
