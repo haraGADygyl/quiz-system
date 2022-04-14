@@ -2,6 +2,8 @@ import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+from quiz_system.utils import is_production, is_test
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -126,6 +128,31 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+LOGGING_LEVEL = 'DEBUG'
+
+if is_production():
+    LOGGING_LEVEL = 'INFO'
+elif is_test():
+    LOGGING_LEVEL = 'CRITICAL'
+
+LOGGING = {
+    'version': 1,
+    'handlers': {
+        'console': {
+            # DEBUG, WARNING, INFO, ERROR, CRITICAL,
+            'level': LOGGING_LEVEL,
+            'filters': [],
+            'class': 'logging.StreamHandler',
+        }
+    },
+    'loggers': {
+        'django.db.backends': {
+            'level': LOGGING_LEVEL,
+            'handlers': ['console'],
+        }
+    }
+}
 
 LOGIN_REDIRECT_URL = "index"
 LOGOUT_REDIRECT_URL = "index"
