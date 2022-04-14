@@ -1,5 +1,5 @@
 body {
-    background-image: url(/static/images/photo2.jpeg) center;
+    /*background-image: url(/static/images/photo2.jpeg) center;*/
     -webkit-background-size: cover;
     background-size: cover;
 }
