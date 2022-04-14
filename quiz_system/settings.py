@@ -97,11 +97,11 @@ WSGI_APPLICATION = "quiz_system.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "quiz_db",
-        "USER": "postgres",
-        "PASSWORD": "manushev",
-        "HOST": "127.0.0.1",
-        "PORT": "5433",
+        "NAME": "dbeq509ki1igpq",
+        "USER": "evzwfuwujbjmar",
+        "PASSWORD": "a44b9584220400a7efdc18557afc6d0b7d297ac5b17b43dbeb0a18e2ac713d33",
+        "HOST": "ec2-34-247-72-29.eu-west-1.compute.amazonaws.com",
+        "PORT": "5432",
     }
 }
 
