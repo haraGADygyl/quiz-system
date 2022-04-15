@@ -6,7 +6,6 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, TemplateView, UpdateView, DeleteView
 
 from .forms import StudentSignUpForm, TeacherSignUpForm, UserModel
-from .models import CustomUser
 
 
 class SignupView(TemplateView):

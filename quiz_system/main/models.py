@@ -1,7 +1,11 @@
+import logging
+
 from django.db import models
 from django.db.models import F
 from django.urls import reverse
 from django.utils import timezone
+
+logger = logging.getLogger(__name__)
 
 
 class Subject(models.Model):
@@ -115,6 +119,7 @@ class QuizTakerResponse(models.Model):
 
     def save(self, *args, **kwargs):
         if self.question.quiz != self.quiztaker.quiz:
+            logger.debug(f"{self.question}")
             raise self.question.quiz.DoesNotExist(
                 f"{self.quiztaker} has no interest in {self.question.quiz}"
             )

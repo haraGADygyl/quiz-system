@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.db import transaction
 from django.forms import TextInput
 
-from quiz_system.accounts.models import CustomUser, Student
+from quiz_system.accounts.models import Student
 from quiz_system.main.models import Subject
 
 UserModel = get_user_model()

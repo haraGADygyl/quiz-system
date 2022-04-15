@@ -9,7 +9,7 @@
                 <p>
                 <p><h4>Correct Answers: {{ correct_responses }}</h4>
                 <p>
-                <p><h4>Score: {{ score }}%</h4>
+                <p><h4>Score: {{ score|floatformat:2 }}%</h4>
                 <p>
                 <p><small class="text-muted">Start Time: {{ quiz_taker.start_time }}</small>
                 <p>

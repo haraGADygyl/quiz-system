@@ -12,7 +12,6 @@ from django.views.generic import (
 from django.views.generic.detail import DetailView
 
 from ..decorators import teacher_required
-from ..forms import QuestionForm
 from ..models import Question
 
 logger = logging.getLogger(__name__)

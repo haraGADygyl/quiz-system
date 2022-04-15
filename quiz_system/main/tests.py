@@ -1,17 +1,15 @@
 # Create your tests here.
-from django.test import TestCase, TransactionTestCase, RequestFactory
-from django.test import Client
-from django.urls import reverse
 from django.contrib.auth import get_user_model
-from django.core.paginator import Paginator, Page, PageNotAnInteger, EmptyPage
-from .views.quiz import QuizList, CreateQuizView, QuizDetailView, QuizUpdateView, QuizDeleteView, quiz_taking, \
-    quiz_results
+from django.test import TestCase, RequestFactory
+from django.urls import reverse
+
 from .models import Quiz, Subject, Question, Answer, QuizTaker, QuizTakerResponse
-# from users.models import CustomUser, Student
-
-
+from .views.quiz import CreateQuizView, quiz_taking
 # Create your tests here.
 from ..accounts.models import CustomUser, Student
+
+
+# from users.models import CustomUser, Student
 
 
 def create_custom_user2(username, is_student=False, is_teacher=False, password="secure"):
@@ -99,6 +97,9 @@ class AnswerTest(TestCase):
         self.assertIsInstance(self.answer3, Answer)
 
     def test_answer_is_correct(self):
+        self.assertEqual(self.answer1.is_correct, True)
+
+    def test_answer_is_not_correct(self):
         self.assertEqual(self.answer3.is_correct, False)
 
 
@@ -210,14 +211,14 @@ class QuizViewTest(TestCase):
         cls.quiz1 = Quiz.objects.create(name="First Quiz", subject=cls.subject1, owner=cls.teacher)
         cls.quiz2 = Quiz.objects.create(name="Second Quiz", subject=cls.subject1, owner=cls.teacher)
 
-    # def test_quiz_list(self):
-    #     # response = self.client.get('/quiz/')
-    #     response = self.client.get(reverse('quiz_list'))
-    #     # check if the response is 200 OK
-    #     self.assertEqual(response.status_code, 200)
-    #     self.assertContains(response, text=self.quiz1.name, count=1, status_code=200)
-    #     self.assertIn(self.quiz2, response.context['object_list'])
-    #     self.assertEqual(len(response.context['object_list']), 2)
+    def test_quiz_list(self):
+        # response = self.client.get('/quiz/')
+        response = self.client.get(reverse('quiz_list'))
+        # check if the response is 200 OK
+        self.assertEqual(response.status_code, 200)
+        # self.assertContains(response, text=self.quiz1.name, count=1, status_code=200)
+        self.assertIn(self.quiz2, response.context['object_list'])
+        self.assertEqual(len(response.context['object_list']), 2)
 
     def test_quiz_create(self):
         self.factory = RequestFactory()
@@ -226,7 +227,6 @@ class QuizViewTest(TestCase):
         response = CreateQuizView.as_view()(request)
         self.assertEqual(response.status_code, 200)
 
-    # No reason to test this
     def test_quiz_details(self):
         response = self.client.get(reverse('quiz_detail', args=[self.quiz1.pk]))
         self.assertEqual(response.status_code, 200)

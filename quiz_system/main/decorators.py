@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import user_passes_test
 
 
 def student_required(
-    function=None, redirect_field_name=REDIRECT_FIELD_NAME, login_url="login"
+        function=None, redirect_field_name=REDIRECT_FIELD_NAME, login_url="login"
 ):
     """
     Decorator for views that checks that the logged-in user is a student,
@@ -20,7 +20,7 @@ def student_required(
 
 
 def teacher_required(
-    function=None, redirect_field_name=REDIRECT_FIELD_NAME, login_url="login"
+        function=None, redirect_field_name=REDIRECT_FIELD_NAME, login_url="login"
 ):
     """
     Decorator for views that checks that the logged-in user is a teacher,

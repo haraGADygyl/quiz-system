@@ -10,7 +10,7 @@
                 <h2 class="mb-3">Student Signup</h2>
                 {% csrf_token %}
                 {% bootstrap_form form %}
-                    <button type="submit" class="btn btn-primary">Signup</button>
+                <button type="submit" class="btn btn-primary">Signup</button>
             </form>
             <div class="bottom-text mt-2">
                 <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>

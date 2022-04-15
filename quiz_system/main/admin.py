@@ -1,4 +1,5 @@
 from django.contrib import admin
+
 from quiz_system.main.models import Subject, Quiz, Question, Answer
 
 admin.site.register(Subject)

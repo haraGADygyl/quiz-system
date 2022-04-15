@@ -95,7 +95,7 @@ def quiz_taking(request, pk):
             request.session["quiz_taken"] = quiz_taker.quiz.name
             request.session["quiz_taker"] = quiz_taker.student.user.username
             request.session["quiz_taker_id"] = quiz_taker.id
-            logger.info(quiz_taker)
+            logger.debug(quiz_taker)
 
         elif request.POST.get("question_choice"):
             request.session["question_choice"] = request.POST.get("question_choice")
@@ -116,10 +116,11 @@ def quiz_taking(request, pk):
                 student_response = QuizTakerResponse.objects.create(
                     quiztaker=quiz_taker, question=question, answer=answer
                 )
-                logger.info(student_response)
+                logger.debug(student_response)
                 # update the correct_answers for the quiz_taker
                 if answer.is_correct:
                     quiz_taker.correct_answers = F("correct_answers") + 1
+                    logger.debug(quiz_taker.correct_answers)
                     quiz_taker.save()
 
             if request.POST.get("final_submit"):
