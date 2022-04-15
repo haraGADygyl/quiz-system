@@ -1,5 +1,6 @@
 import logging
 
+from django.core.validators import MinLengthValidator
 from django.db import models
 from django.db.models import F
 from django.urls import reverse
@@ -9,9 +10,19 @@ logger = logging.getLogger(__name__)
 
 
 class Subject(models.Model):
-    name = models.CharField(max_length=100, unique=True, error_messages={
-        "unique": "There is already a subject with this name."
-    })
+    MIN_SUBJECT_LENGTH = 3
+    MAX_SUBJECT_LENGTH = 100
+
+    name = models.CharField(
+        max_length=MAX_SUBJECT_LENGTH,
+        unique=True,
+        error_messages={
+            "unique": "There is already a subject with this name."
+        },
+        validators=(
+            MinLengthValidator(MIN_SUBJECT_LENGTH),
+        ),
+    )
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 
@@ -20,9 +31,19 @@ class Subject(models.Model):
 
 
 class Quiz(models.Model):
-    name = models.CharField(max_length=100, unique=True, error_messages={
-        "unique": "There is already a quiz with this name."
-    })
+    MIN_QUIZ_LENGTH = 10
+    MAX_QUIZ_LENGTH = 100
+
+    name = models.CharField(
+        max_length=MAX_QUIZ_LENGTH,
+        unique=True,
+        error_messages={
+            "unique": "There is already a quiz with this name."
+        },
+        validators=(
+            MinLengthValidator(MIN_QUIZ_LENGTH),
+        ),
+    )
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
@@ -44,9 +65,19 @@ class Quiz(models.Model):
 
 
 class Question(models.Model):
-    question = models.CharField(max_length=250, unique=True, error_messages={
-        "unique": "There is already a question with this name."
-    })
+    MIN_QUESTION_LENGTH = 10
+    MAX_QUESTION_LENGTH = 250
+
+    question = models.CharField(
+        max_length=MAX_QUESTION_LENGTH,
+        unique=True,
+        error_messages={
+            "unique": "There is already a question with this name."
+        },
+        validators=(
+            MinLengthValidator(MIN_QUESTION_LENGTH),
+        ),
+    )
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
     updated_on = models.DateTimeField(auto_now=True)
 
@@ -64,9 +95,18 @@ class Question(models.Model):
 
 
 class Answer(models.Model):
-    answer = models.CharField(max_length=250, unique=True, error_messages={
-        "unique": "There is already an answer with this name."
-    })
+    MIN_ANSWER_LENGTH = 2
+    MAX_ANSWER_LENGTH = 250
+
+    answer = models.CharField(
+        max_length=MAX_ANSWER_LENGTH,
+        unique=True, error_messages={
+            "unique": "There is already an answer with this name."
+        },
+        validators=(
+            MinLengthValidator(MIN_ANSWER_LENGTH),
+        ),
+    )
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     is_correct = models.BooleanField(default=False)
     updated_on = models.DateTimeField(auto_now=True)
